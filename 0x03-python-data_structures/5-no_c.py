@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 def no_c(my_string):
-    new_string = ''.join(char for char in my_string if char.lower() not in ['c', 'C'])
-    return new_string
+    new_str = my_string.translate({ord("c"): None})
+    sec_str = new_str.translate({ord("C"): None})
+    return sec_str
 
