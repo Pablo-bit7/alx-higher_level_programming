@@ -8,3 +8,4 @@ if __name__ == "__main__":
         print("{} arguments.".format(y))
     for i in range(y):
         print("{}: {:s}".format(i + 1, argv[i + 1]))
+
