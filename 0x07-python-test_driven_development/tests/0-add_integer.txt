@@ -1,0 +1,27 @@
+# tests/0-add_integer.txt
+
+# Test case 1
+>>> add_integer(1, 2)
+3
+
+# Test case 2
+>>> add_integer(100, -2)
+98
+
+# Test case 3
+>>> add_integer(2)
+100
+
+# Test case 4
+>>> add_integer(100.3, -2)
+98
+
+# Test case 5 - Exception case for invalid input (string instead of integer)
+>>> try: add_integer(4, "School")
+... except Exception as e: print(e)
+b must be an integer
+
+# Test case 6 - Exception case for None input
+>>> try: add_integer(None)
+... except Exception as e: print(e)
+a must be an integer
