@@ -1,0 +1,26 @@
+# tests/2-matrix_divided.txt
+
+# Test case 1
+>>> matrix_divided([[1, 2, 3], [4, 5, 6]], 3)
+[[0.33, 0.67, 1.0], [1.33, 1.67, 2.0]]
+
+# Test case 2
+>>> matrix_divided([[1, 2, 3], [4, 5, 6]], 0)
+Traceback (most recent call last):
+...
+ZeroDivisionError: division by zero
+
+# Test case 3 - Exception case for invalid matrix input (not a list of lists)
+>>> try: matrix_divided([1, 2, 3], 3)
+... except Exception as e: print(e)
+matrix must be a matrix (list of lists) of integers/floats
+
+# Test case 4 - Exception case for matrix with different row sizes
+>>> try: matrix_divided([[1, 2, 3], [4, 5]], 3)
+... except Exception as e: print(e)
+Each row of the matrix must have the same size
+
+# Test case 5 - Exception case for div not being a number
+>>> try: matrix_divided([[1, 2, 3], [4, 5, 6]], "3")
+... except Exception as e: print(e)
+div must be a number
