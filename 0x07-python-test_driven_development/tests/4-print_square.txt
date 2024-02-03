@@ -1,0 +1,34 @@
+# tests/4-print_square.txt
+
+# Test case 1
+>>> print_square(4)
+####
+####
+####
+####
+
+# Test case 2
+>>> print_square(10)
+##########
+##########
+##########
+##########
+##########
+##########
+##########
+##########
+##########
+##########
+
+# Test case 3
+>>> print_square(0)
+#
+
+# Test case 4
+>>> print_square(1)
+#
+
+# Test case 5 - Exception case for negative size
+>>> try: print_square(-1)
+... except Exception as e: print(e)
+size must be >= 0
