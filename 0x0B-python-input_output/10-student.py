@@ -28,10 +28,12 @@ class Student:
         Retrieves a dictionary representation of a Student instance.
 
         Parameters:
-        - attrs (list): A list of strings specifying which attributes to retrieve.
+        - attrs (list): A list of strings specifying which attributes to
+        retrieve.
 
         Returns:
-        - dict: A dictionary containing the specified attributes of the Student.
+        - dict: A dictionary containing the specified attributes of the
+        Student.
         """
         if attrs is None:
             return self.__dict__
