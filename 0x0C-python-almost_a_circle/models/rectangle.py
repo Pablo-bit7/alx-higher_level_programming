@@ -5,7 +5,7 @@
 class Rectangle:
     """Defines a rectangle."""
 
-    def __init__(self, width=0, height=0, x=0, y=0):
+    def __init__(self, width=0, height=0, x=0, y=0, id=None):
         """Initializes a new rectangle.
 
         Args:
@@ -13,11 +13,13 @@ class Rectangle:
             height (int): The height of the rectangle.
             x (int): The x-coordinate of the rectangle.
             y (int): The y-coordinate of the rectangle.
+            id: The identifier of the rectangle.
         """
         self.width = width
         self.height = height
         self.x = x
         self.y = y
+        self.id = id
 
     @property
     def width(self):
@@ -106,3 +108,7 @@ class Rectangle:
         if value < 0:
             raise ValueError("y must be >= 0")
         self.__y = value
+
+    def area(self):
+        """Calculates and returns the area of the rectangle."""
+        return self.__width * self.__height
