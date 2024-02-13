@@ -128,11 +128,15 @@ class Rectangle:
         return "[Rectangle] ({}) {}/{} - {}/{}".format(
             self.id, self.__x, self.__y, self.__width, self.__height)
 
-    def update(self, *args):
+    def update(self, *args, **kwargs):
         """Assigns arguments to attributes: id, width, height, x, y."""
         attr_list = ["id", "width", "height", "x", "y"]
-        for i in range(len(args)):
-            setattr(self, attr_list[i], args[i])
+        if args:
+            for i in range(len(args)):
+                setattr(self, attr_list[i], args[i])
+        else:
+            for key, value in kwargs.items():
+                setattr(self, key, value)
 
     def to_dictionary(self):
         """Returns a dictionary representation of the rectangle."""
