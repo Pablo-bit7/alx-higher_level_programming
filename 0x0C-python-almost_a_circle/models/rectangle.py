@@ -5,6 +5,8 @@
 class Rectangle:
     """Defines a rectangle."""
 
+    __nb_objects = 0
+
     def __init__(self, width=0, height=0, x=0, y=0, id=None):
         """Initializes a new rectangle.
 
@@ -19,7 +21,8 @@ class Rectangle:
         self.height = height
         self.x = x
         self.y = y
-        self.id = id
+        self.id = id if id is not None else Rectangle.__nb_objects
+        Rectangle.__nb_objects += 1
 
     @property
     def width(self):
