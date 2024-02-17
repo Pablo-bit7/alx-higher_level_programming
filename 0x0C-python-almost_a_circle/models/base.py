@@ -33,6 +33,21 @@ class Base:
         """
         return json.dumps(list_dictionaries)
 
+    @staticmethod
+    def from_json_string(json_string):
+        """Converts a JSON string to a list of dictionaries.
+
+        Args:
+            json_string (str): JSON string to convert.
+
+        Returns:
+            list: List of dictionaries represented by the JSON string.
+        """
+        import json
+        if json_string is None or not json_string:
+            return []
+        return json.loads(json_string)
+
     @classmethod
     def save_to_file(cls, list_objs):
         """ Writes the JSON string representation of list_objs to a file.
