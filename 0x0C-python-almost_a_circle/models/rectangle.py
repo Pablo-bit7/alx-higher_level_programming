@@ -3,7 +3,7 @@
 from models.base import Base
 
 
-class Rectangle:
+class Rectangle(Base):
     """Defines a rectangle."""
 
     __nb_objects = 1
