@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Defines the Base class. """
 import json
+import os
 
 
 class Base:
@@ -68,32 +69,26 @@ class Base:
 
     @classmethod
     def create(cls, **dictionary):
-        """Creates a new instance from a dictionary.
+        """Returns an instance with all attributes already set."""
+        if cls.__name__ == "Rectangle":
+            from models.rectangle import Rectangle
+            dummy_instance = Rectangle(1, 1)
+        elif cls.__name__ == "Square":
+            from models.square import Square
+            dummy_instance = Square(1)
+        else:
+            return None
 
-        Args:
-            dictionary (dict): Dictionary containing the attributes of
-            the instance.
-
-        Returns:
-            Instance: New instance created from the dictionary.
-        """
-        instance = cls(1, 1)  # Default values for Base
-        instance.update(**dictionary)
-        return instance
+        dummy_instance.update(**dictionary)
+        return dummy_instance
 
     @classmethod
     def load_from_file(cls):
-        """Loads a list of instances from a JSON file.
-
-        Returns:
-            list: List of instances loaded from the file.
-        """
-        import json
-        filename = cls.__name__ + ".json"
-        try:
-            with open(filename, "r") as file:
-                json_string = file.read()
-                list_dicts = cls.from_json_string(json_string)
-                return [cls.create(**d) for d in list_dicts]
-        except FileNotFoundError:
+        """Returns a list of instances."""
+        filename = "{}.json".format(cls.__name__)
+        if not os.path.exists(filename):
             return []
+        with open(filename, mode='r', encoding='utf-8') as file:
+            json_string = file.read()
+            list_dicts = cls.from_json_string(json_string)
+            return [cls.create(**d) for d in list_dicts]
