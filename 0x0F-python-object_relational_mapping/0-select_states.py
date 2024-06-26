@@ -9,16 +9,13 @@ Results are sorted in ascending order by states.id.
 import sys
 import MySQLdb
 
+
 def printAllStates():
     """
     Connects to the MySQL database and retrieves all states
     in ascending order by id.
     Prints each state as a tuple (id, name).
     """
-    # Check if correct number of arguments are provided
-    if len(sys.argv) != 4:
-        print("Usage: ./0-select_states.py <username> <password> <database_name>")
-        sys.exit(1)
 
     # Gather command line arguments
     username = sys.argv[1]
@@ -52,7 +49,7 @@ def printAllStates():
         rows = cursor.fetchall()
         for row in rows:
             print(row)
-        
+  
     except MySQLdb.Error as e:
         print(f"Error executing MySQL query: {e}")
         sys.exit(1)
@@ -62,6 +59,6 @@ def printAllStates():
         cursor.close()
         db.close()
 
+
 if __name__ == "__main__":
     printAllStates()
-
