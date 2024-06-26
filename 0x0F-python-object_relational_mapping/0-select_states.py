@@ -1,21 +1,20 @@
 #!/usr/bin/python3
-import os
-
-os.environ['SQLALCHEMY_WARN_20'] = '1'
+"""
+This script lists all states from the database hbtn_0e_0_usa.
+The script takes three arguments: mysql username,
+mysql password, and database name.
+Results are sorted in ascending order by states.id.
+"""
 
 import sys
-from sqlalchemy import create_engine, Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+import MySQLdb
 
-Base = declarative_base()
-
-class State(Base):
-    __tablename__ = 'states'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(256), nullable=False)
-
-if __name__ == "__main__":
+def printAllStates():
+    """
+    Connects to the MySQL database and retrieves all states
+    in ascending order by id.
+    Prints each state as a tuple (id, name).
+    """
     # Check if correct number of arguments are provided
     if len(sys.argv) != 4:
         print("Usage: ./0-select_states.py <username> <password> <database_name>")
@@ -26,17 +25,43 @@ if __name__ == "__main__":
     password = sys.argv[2]
     database_name = sys.argv[3]
 
-    # Create engine and bind it to the session
-    engine = create_engine(f'mysql+mysqldb://{username}:{password}@localhost/{database_name}')
-    Session = sessionmaker(bind=engine)
-    session = Session()
+    # Connect to MySQL database
+    try:
+        db = MySQLdb.connect(
+            host="127.0.0.1",
+            port=3306,
+            user=username,
+            passwd=password,
+            db=database_name
+        )
+    except MySQLdb.Error as e:
+        print(f"Error connecting to MySQL database: {e}")
+        sys.exit(1)
 
-    # Query all states ordered by id
-    states = session.query(State).order_by(State.id).all()
+    # Create cursor object to execute queries
+    cursor = db.cursor()
 
-    # Print each state
-    for state in states:
-        print((state.id, state.name))
+    # Define the query to select all states ordered by id
+    query = "SELECT * FROM states ORDER BY id ASC"
 
-    # Close session
-    session.close()
+    try:
+        # Execute the query
+        cursor.execute(query)
+
+        # Fetch all rows and print them
+        rows = cursor.fetchall()
+        for row in rows:
+            print(row)
+        
+    except MySQLdb.Error as e:
+        print(f"Error executing MySQL query: {e}")
+        sys.exit(1)
+
+    finally:
+        # Close cursor and database connection
+        cursor.close()
+        db.close()
+
+if __name__ == "__main__":
+    printAllStates()
+
