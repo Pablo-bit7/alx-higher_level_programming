@@ -49,7 +49,7 @@ def printAllStates():
         rows = cursor.fetchall()
         for row in rows:
             print(row)
-  
+
     except MySQLdb.Error as e:
         print(f"Error executing MySQL query: {e}")
         sys.exit(1)
