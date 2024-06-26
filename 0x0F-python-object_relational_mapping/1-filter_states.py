@@ -1,65 +1,65 @@
 #!/usr/bin/python3
 """
 This script lists all states with a name starting with 'N' (upper N)
-from the database hbtn_0e_0_usa using SQLAlchemy ORM.
+from the database hbtn_0e_0_usa.
 The script takes three arguments: mysql username, mysql password,
 and database name.
 Results are sorted in ascending order by states.id.
 """
 
 import sys
-import warnings
-from sqlalchemy import create_engine, Column, Integer, String
-from sqlalchemy.orm import declarative_base, sessionmaker
-
-Base = declarative_base()
+import MySQLdb
 
 
-class State(Base):
+def printStatesStartingWithN():
     """
-    State class mapped to the states table in the database
-    """
-    __tablename__ = 'states'
-    id = Column(Integer, primary_key=True, nullable=False)
-    name = Column(String(256), nullable=False)
-
-
-def printStatesStartingWithN(username, password, database_name):
-    """
-    Connects to the MySQL database using SQLAlchemy ORM and retrieves all states
-    with a name starting with 'N' in ascending order by id.
+    Connects to the MySQL database and retrieves all states with a name
+    starting with 'N' in ascending order by id.
     Prints each state as a tuple (id, name).
     """
-    # Suppress deprecation warnings
-    warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-    # Create a new SQLAlchemy engine instance
-    engine = create_engine(f'mysql+mysqldb://{username}:{password}@localhost/{database_name}')
-
-    # Create a configured "Session" class
-    Session = sessionmaker(bind=engine)
-
-    # Create a Session
-    session = Session()
-
-    # Query the database for states with names starting with 'N'
-    states = session.query(State).filter(State.name.like('N%')).order_by(State.id).all()
-
-    # Print the states
-    for state in states:
-        print((state.id, state.name))
-
-    # Close the session
-    session.close()
-
-
-if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        print("Usage: ./1-filter_states.py <username> <password> <database_name>")
-        sys.exit(1)
-
+    # Gather command line arguments
     username = sys.argv[1]
     password = sys.argv[2]
     database_name = sys.argv[3]
 
-    printStatesStartingWithN(username, password, database_name)
+    # Connect to MySQL database
+    try:
+        db = MySQLdb.connect(
+            host="127.0.0.1",
+            port=3306,
+            user=username,
+            passwd=password,
+            db=database_name
+        )
+    except MySQLdb.Error as e:
+        print(f"Error connecting to MySQL database: {e}")
+        sys.exit(1)
+
+    # Create cursor object to execute queries
+    cursor = db.cursor()
+
+    # Define query to select states with names 'N' ordered by id
+    query = "SELECT * FROM states WHERE name LIKE 'N%' ORDER BY id ASC"
+
+    try:
+        # Execute the query
+        cursor.execute(query)
+
+        # Fetch all rows and print them
+        rows = cursor.fetchall()
+        for row in rows:
+            print(row)
+
+    except MySQLdb.Error as e:
+        print(f"Error executing MySQL query: {e}")
+        sys.exit(1)
+
+    finally:
+        # Close cursor and database connection
+        cursor.close()
+        db.close()
+
+
+if __name__ == "__main__":
+    printStatesStartingWithN()
