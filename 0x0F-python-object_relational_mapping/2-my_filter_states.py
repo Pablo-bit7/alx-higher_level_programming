@@ -41,7 +41,8 @@ def printStatesMatchingName():
     cursor = db.cursor()
 
     # Define query to select states with a name matching the argument
-    query = "SELECT * FROM states WHERE name = '{}' ORDER BY id ASC".format(state_name)
+    query = ("SELECT * FROM states WHERE name = '{}' "
+             "ORDER BY id ASC".format(state_name))
 
     try:
         # Execute the query
