@@ -41,10 +41,10 @@ def list_cities_by_state():
 
     # Define query to select cities of a given state ordered by id
     query = """
-    SELECT cities.id, cities.name 
-    FROM cities 
-    JOIN states ON cities.state_id = states.id 
-    WHERE states.name = %s 
+    SELECT cities.id, cities.name
+    FROM cities
+    JOIN states ON cities.state_id = states.id
+    WHERE states.name = %s
     ORDER BY cities.id ASC
     """
 
