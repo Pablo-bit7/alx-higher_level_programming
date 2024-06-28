@@ -7,8 +7,8 @@ in the MySQL database using SQLAlchemy.
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 
-# Create an instance of the Base class
 Base = declarative_base()
+
 
 class State(Base):
     """
